@@ -1,0 +1,15 @@
+[package]
+name = "ristsrv"
+version = "0.1.0"
+authors = ["Alexander Balashov <alexander.balashov@karlstorz.com>"]
+edition = "2018"
+
+[dependencies]
+byte-slice-cast = "0.2"
+failure = "0.1"
+failure_derive = "0.1"
+glib = "0.7.1"
+gstreamer = "0.13.0"
+gstreamer-base = "0.13.0"
+gstreamer-app = "0.13.0"
+gstreamer-video = "0.13.0"
