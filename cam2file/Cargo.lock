@@ -38,6 +38,21 @@ version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
+name = "cam2file"
+version = "0.1.0"
+dependencies = [
+ "byte-slice-cast 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ctrlc 3.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "failure 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "failure_derive 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "glib 0.7.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "gstreamer 0.13.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "gstreamer-app 0.13.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "gstreamer-base 0.13.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "gstreamer-video 0.13.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "cc"
 version = "1.0.36"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -289,21 +304,6 @@ version = "0.6.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "proc-macro2 0.4.29 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "ristsrv"
-version = "0.1.0"
-dependencies = [
- "byte-slice-cast 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "ctrlc 3.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "failure 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
- "failure_derive 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
- "glib 0.7.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "gstreamer 0.13.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "gstreamer-app 0.13.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "gstreamer-base 0.13.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "gstreamer-video 0.13.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]

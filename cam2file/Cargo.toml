@@ -1,5 +1,5 @@
 [package]
-name = "ristsrv"
+name = "cam2file"
 version = "0.1.0"
 authors = ["Alexander Balashov <alexander.balashov@karlstorz.com>"]
 edition = "2018"

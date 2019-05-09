@@ -50,6 +50,7 @@ fn srv_main() -> Result<(), Error> {
     if args.len() > 1 {
         file_path = args[1].clone();
     }
+    println!("Capturing from webcam to {}...", file_path);
 
     gst::init()?;
     let pipeline = gst::parse_launch(&buid_pipeline())?;
@@ -82,7 +83,6 @@ fn srv_main() -> Result<(), Error> {
 }
 
 fn main() {
-    println!("Starting RIST server...");
     match run_common::run(srv_main) {
         Ok(r) => r,
         Err(e) => eprintln!("Error! {}", e),
