@@ -1,4 +1,3 @@
-#[macro_use]
 extern crate gstreamer as gst;
 use gst::prelude::*;
 extern crate glib;
@@ -7,6 +6,7 @@ use std::error::Error as StdError;
 use std::thread;
 use std::time::Duration;
 use std::fs;
+use std::env;
 
 #[path = "common.rs"]
 mod run_common;
@@ -17,6 +17,7 @@ use failure::Error;
 #[macro_use]
 extern crate failure_derive;
 
+/*
 #[derive(Debug, Fail)]
 #[fail(display = "Missing element {}", _0)]
 struct MissingElement(&'static str);
@@ -28,6 +29,7 @@ struct NoSuchPad(&'static str, String);
 #[derive(Debug, Fail)]
 #[fail(display = "Usage: {} URI FEC_PERCENTAGE", _0)]
 struct UsageError(String);
+*/
 
 #[derive(Debug, Fail)]
 #[fail(
@@ -43,8 +45,19 @@ struct ErrorMessage {
 }
 
 fn srv_main() -> Result<(), Error> {
+    let args: Vec<String> = env::args().collect();
+    let mut file_path = String::from("capture.mp4");
+    if args.len() > 1 {
+        file_path = args[1].clone();
+    }
+
     gst::init()?;
     let pipeline = gst::parse_launch(&buid_pipeline())?;
+
+    let pl = pipeline.clone().dynamic_cast::<gst::Pipeline>().unwrap();
+    let filesink = pl.get_by_name("fs").unwrap();
+    let _ = filesink.set_property("location", &file_path);
+
     pipeline.set_state(gst::State::Playing)?;
 
     let ctrl_pipe = pipeline.clone();
@@ -54,13 +67,11 @@ fn srv_main() -> Result<(), Error> {
         ctrl_pipe.send_event(ev);
     }).expect("Error setting Ctrl-C handler");
 
-    let ctrl_pipe = pipeline.clone();
     thread::spawn(move || {
-        let pl = ctrl_pipe.dynamic_cast::<gst::Pipeline>().unwrap();
-        let filesink = pl.get_by_name("fs").unwrap();
         loop {
             thread::sleep(Duration::from_secs(1));
-            let x = fs::metadata("capture1.mp4").unwrap().len();        
+            let fp = file_path.clone();
+            let x = fs::metadata(fp).unwrap().len();        
             println!("File size: {}", x);
         }
     });
@@ -85,7 +96,7 @@ fn buid_pipeline() -> String {
 
 #[cfg(target_os = "windows")]
 fn buid_pipeline() -> String {
-    String::from("ksvideosrc ! videoconvert ! x264enc ! mp4mux ! filesink name=fs buffer-mode=full buffer-size=10000 location=capture1.mp4 sync=false")
+    String::from("ksvideosrc ! videoconvert ! x264enc ! mp4mux ! filesink name=fs buffer-mode=full buffer-size=10000 sync=false")
 }
 
 fn wait_loop(pipeline: &gst::Element)  -> Result<(), Error> {
