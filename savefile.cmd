@@ -1,0 +1,1 @@
+gst-launch-1.0 -v -e ksvideosrc ! videoconvert ! x264enc ! h264parse ! mp4mux fragment-duration=1000 ! filesink location=capture1.mp4 sync=false
