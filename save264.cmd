@@ -1,0 +1,1 @@
+gst-launch-1.0 -v -e ksvideosrc ! videoconvert ! x264enc ! filesink location=capture.264 sync=false
