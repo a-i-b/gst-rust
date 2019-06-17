@@ -1,0 +1,1 @@
+gst-launch-1.0 -v -e ksvideosrc ! videoconvert ! openh264enc bitrate=1000000 ! h264parse ! mp4mux ! filesink location=capture2.mp4 sync=false
