@@ -1,2 +1,7 @@
 /ristsrv/target/*
 /cam2file/target/*
+
+*.mp4
+1.txt
+ctrlplay/target
+.DS_Store
