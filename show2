@@ -1,0 +1,4 @@
+# gst-launch-1.0 -v -e filesrc location=capturex.mp4 ! decodebin ! videoconvert ! osxvideosink
+# videorate ! video/x-raw,framerate=30/1 
+
+gst-launch-1.0 -v -e filesrc location=capturex.mp4 ! qtdemux ! queue ! h264parse ! vtdec_hw ! videoconvert ! osxvideosink
