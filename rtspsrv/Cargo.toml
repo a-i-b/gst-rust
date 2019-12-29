@@ -1,0 +1,22 @@
+[package]
+name = "rtspsrv"
+version = "0.1.0"
+authors = ["Alex <a.balashov@gmx.de>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+log = "0.4"
+pretty_env_logger = "0.3"
+glib = "0.9.0"
+failure = "0.1"
+failure_derive = "0.1"
+ctrlc = "3.1.2"
+rumqtt = "0.31.0"
+gstreamer = "0.15.0"
+gstreamer-base = "0.15.0"
+gstreamer-app = "0.15.0"
+gstreamer-video = "0.15.0"
+gstreamer-rtsp-server = "0.15.0"
+gstreamer-rtsp-server-sys = "0.8.1"
