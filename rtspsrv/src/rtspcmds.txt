@@ -1,3 +1,5 @@
 ./rtspsrv "avfvideosrc ! video/x-raw, width=640,height=480 ! videoconvert ! vtenc_h264_hw max-keyframe-interval=10 bitrate=3000000 quality=1 realtime=true ! queue ! rtph264pay name=pay0 pt=96"
 
 gst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test latency=200 ! rtph264depay ! h264parse ! vtdec_hw ! videoconvert ! osxvideosink
+
+./rtspsrv "avfvideosrc ! video/x-raw, width=640,height=480 ! videoconvert ! x264enc tune=zerolatency ! h264parse ! video/x-h264,stream-format=avc,alignment=au,profile=baseline ! queue ! rtph264pay name=pay0 pt=102"

@@ -90,7 +90,7 @@ window.addEventListener('load', function(){
 
   			pipeline = p;
 
-  			pipeline.create("PlayerEndpoint", {networkCache: 0, uri: address.value}, function(error, player){
+  			pipeline.create("PlayerEndpoint", {networkCache: 0, uri: address.value, useEncodedMedia: true}, function(error, player){
   			  if(error) return onError(error);
 
   			  pipeline.create("WebRtcEndpoint", function(error, webRtcEndpoint){
@@ -98,6 +98,7 @@ window.addEventListener('load', function(){
 
           setIceCandidateCallbacks(webRtcEndpoint, webRtcPeer, onError);
 
+          sdpOffer = removeOther(sdpOffer, "108")
   				webRtcEndpoint.processOffer(sdpOffer, function(error, sdpAnswer){
   					if(error) return onError(error);
 
@@ -177,6 +178,51 @@ function hideSpinner() {
 		arguments[i].poster = 'img/webrtc.png';
 		arguments[i].style.background = '';
 	}
+}
+
+function removeOther(sdp, id) {
+  var resSDP = sdp;
+  var sdpLines = splitLines(sdp);
+  sdp.split('\n').forEach(function(line) {
+    for (var i = 0; i < sdpLines.videoCodecNumbers.length; ++i) {
+      if(sdpLines.videoCodecNumbers[i] != id) {
+        if (line.indexOf(':' + sdpLines.videoCodecNumbers[i]) != -1) {
+          resSDP = resSDP.replace(line+'\n', '');
+        }     
+      }
+    }
+  });
+
+  return resSDP;
+}
+
+function splitLines(sdp) {
+  var info = {};
+  sdp.split('\n').forEach(function(line) {
+      if (line.indexOf('m=video') === 0) {
+          info.videoCodecNumbers = [];
+          line.split('SAVPF')[1].split(' ').forEach(function(codecNumber) {
+              codecNumber = codecNumber.trim();
+              if (!codecNumber || !codecNumber.length) return;
+              info.videoCodecNumbers.push(codecNumber);
+              info.videoCodecNumbersOriginal = line;
+          });
+      }
+
+      if (line.indexOf('VP8/90000') !== -1 && !info.vp8LineNumber) {
+          info.vp8LineNumber = line.replace('a=rtpmap:', '').split(' ')[0];
+      }
+
+      if (line.indexOf('VP9/90000') !== -1 && !info.vp9LineNumber) {
+          info.vp9LineNumber = line.replace('a=rtpmap:', '').split(' ')[0];
+      }
+
+      if (line.indexOf('H264/90000') !== -1 && !info.h264LineNumber) {
+          info.h264LineNumber = line.replace('a=rtpmap:', '').split(' ')[0];
+      }
+  });
+
+  return info;
 }
 
 /**
