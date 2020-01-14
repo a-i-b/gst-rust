@@ -61,7 +61,10 @@ fn main_loop() -> Result<(), Error> {
     // a live source, you will probably want to set this to shared, to save
     // computing and memory capacity on the server.
     factory.set_shared(true);
-
+    factory.connect_media_constructed(|_, media| {
+        println!("factory media constructed");
+        println!("{:?}", media);
+    });
     // Now we add a new mount-point and tell the RTSP server to serve the content
     // provided by the factory we configured above, when a client connects to
     // this specific path.
@@ -94,6 +97,7 @@ fn example_main() -> Result<(), Error> {
     gst::init()?;
     main_loop()
 }
+
 
 fn main() {
     match examples_common::run(example_main) {
