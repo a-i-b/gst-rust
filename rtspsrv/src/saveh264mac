@@ -1,0 +1,1 @@
+gst-launch-1.0 -v avfvideosrc ! videoconvert ! vtenc_h264_hw ! h264parse ! video/x-h264,stream-format=byte-stream ! filesink location=$HOME/capture.264
