@@ -2,3 +2,4 @@
 # videorate ! video/x-raw,framerate=30/1 
 
 gst-launch-1.0 -v -e filesrc location=capturex.mp4 ! qtdemux ! queue ! h264parse ! vtdec_hw ! videoconvert ! osxvideosink
+gst-launch-1.0 -v -e multifilesrc location="$HOME/Movies/ch%u.mp4" index=0 ! qtdemux ! queue ! h264parse ! vtdec_hw ! videoconvert ! osxvideosink

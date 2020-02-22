@@ -1,1 +1,5 @@
-gst-launch-1.0 -v avfvideosrc ! videoconvert ! vtenc_h264_hw ! h264parse ! video/x-h264,stream-format=byte-stream ! filesink location=$HOME/capture.264
+#gst-launch-1.0 -v avfvideosrc ! videoconvert ! vtenc_h264_hw ! h264parse ! video/x-h264,stream-format=byte-stream ! filesink location=$HOME/capture.264
+
+gst-launch-1.0 -v avfvideosrc ! videoconvert ! vtenc_h264_hw ! h264parse ! mpegtsmux! filesink location=$HOME/capture.ts
+
+gst-launch-1.0 -v -e avfvideosrc ! videoconvert ! vtenc_h264_hw  realtime=true max-keyframe-interval=5 ! h264parse ! splitmuxsink location="$HOME/Movies/ch%u.mp4" max-size-time=1000000000

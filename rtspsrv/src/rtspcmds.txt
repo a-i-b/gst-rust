@@ -7,3 +7,5 @@ gst-launch-1.0 rtspsrc location=rtsp://localhost:8554/test latency=200 ! rtph264
 ./rtspsrv "avfvideosrc ! video/x-raw, width=640,height=480 ! videoconvert ! vtenc_h264_hw max-keyframe-interval=10 bitrate=3000000 quality=1 realtime=true ! h264parse ! video/x-h264,stream-format=avc,alignment=au,profile=baseline ! queue ! rtph264pay name=pay0 pt=102"
 
 ./rtspsrv "filesrc location=$HOME/capture.264 ! h264parse ! identity datarate = 125000 ! queue ! rtph264pay name=pay0 pt=102"
+
+./rtspsrv "filesrc location=$HOME/capture.ts ! mpegtsdemux ! h264parse ! queue ! rtph264pay name=pay0 pt=102"
